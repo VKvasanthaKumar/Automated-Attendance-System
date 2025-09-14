@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f8;
+            margin: 0;
+            padding: 0 20px;
+            color: #333;
+        }
+        h2, h3 {
+            color: #2c3e50;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        form {
+            margin-bottom: 30px;
+            background-color: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 250px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        ul {
+            background-color: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            list-style-type: square;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f6fa;
+        }
+        a {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            text-decoration: none;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 6px;
+        }
+        a:hover {
+            background-color: #c0392b;
+        }
+        .card {
+            background-color: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<h2>🎓 Faculty Dashboard - {{ faculty_name }}</h2>
+
+<div class="card">
+    <h3>📘 Upload Lesson</h3>
+    <form method="POST">
+        Topic: <input type="text" name="topic" required>
+        <button type="submit">Upload</button>
+    </form>
+</div>
+
+<div class="card">
+    <h3>📗 Uploaded Lessons</h3>
+    <ul>
+        {% for t, d in lessons %}
+        <li>{{ t }} ({{ d }})</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="card">
+    <h3>📊 Attendance Records</h3>
+    <table>
+        <tr><th>Name</th><th>Reg No</th><th>Date</th><th>Status</th></tr>
+        {% for n, r, d, s in attendance_records %}
+        <tr><td>{{ n }}</td><td>{{ r }}</td><td>{{ d }}</td><td>{{ s }}</td></tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="card">
+    <h3>✅ Students Present Today: {{ today_present }}</h3>
+</div>
+
+<div class="card">
+    <h3>📈 Overall Student Attendance %</h3>
+    <table>
+        <tr><th>Name</th><th>Reg No</th><th>Percentage</th></tr>
+        {% for n, r, p in student_percentages %}
+        <tr><td>{{ n }}</td><td>{{ r }}</td><td>{{ p }}%</td></tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div class="card">
+    <h3>⚠️ Low Attendance (<75%)</h3>
+    <table>
+        <tr><th>Name</th><th>Reg No</th><th>Percentage</th></tr>
+        {% for n, r, p in low_attendance %}
+        <tr><td>{{ n }}</td><td>{{ r }}</td><td>{{ p }}%</td></tr>
+        {% endfor %}
+    </table>
+</div>
+
+<a href="{{ url_for('faculty_login') }}">🚪 Back</a>
+
+</body>
+</html>

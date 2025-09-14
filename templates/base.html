@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance System</title>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        {% if current_user.is_authenticated %}
+            {% if current_user.role == 'faculty' %}
+                <a href="{{ url_for('faculty_dashboard') }}">Faculty Dashboard</a>
+                <a href="{{ url_for('daily_report', faculty_id=current_user.id) }}">Daily Report</a>
+                <a href="{{ url_for('percentage_report') }}">Percentage Report</a>
+            {% elif current_user.role == 'student' %}
+                <a href="{{ url_for('student_dashboard') }}">Student Dashboard</a>
+            {% endif %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+        {% endif %}
+    </nav>
+
+    <hr>
+    {% block content %}{% endblock %}
+</body>
+</html>

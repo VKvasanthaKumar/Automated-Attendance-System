@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Dashboard</title>
+    <style>
+        body { font-family: Arial; background-color: #f4f6f8; padding: 20px; }
+        h2, h3 { color: #2c3e50; }
+        .card { background-color: #fff; padding: 15px 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+        table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #3498db; color: white; }
+        tr:nth-child(even) { background-color: #f2f6fa; }
+    </style>
+</head>
+<body>
+    <h2>🎓 Student Dashboard - {{ student_name }}</h2>
+    <p>Class: {{ student_class }} | Department: {{ student_dept }}</p>
+
+    <div class="card">
+        <h3>📊 Attendance Summary</h3>
+        <p>Total Working Days: {{ total_days }}</p>
+        <p>Days Present: {{ present_days }}</p>
+        <p>Attendance Percentage: {{ attendance_percentage }}%</p>
+    </div>
+
+    <div class="card">
+        <h3>🗓️ Attendance History</h3>
+        <table>
+            <tr><th>Date</th><th>Status</th></tr>
+            {% for d, s in attendance_history %}
+            <tr><td>{{ d }}</td><td>{{ s }}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>📘 Lessons for Your Class</h3>
+        <table>
+            <tr><th>Topic</th><th>Date</th><th>Faculty</th></tr>
+            {% for topic, date, faculty in lessons %}
+            <tr><td>{{ topic }}</td><td>{{ date }}</td><td>{{ faculty }}</td></tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="card">
+        <h3>📝 Quizzes</h3>
+        {% for q in quizzes %}
+        <div style="margin-bottom: 15px;">
+            <p><strong>{{ q[1] }}</strong></p>
+            <ul>
+                <li>A. {{ q[2] }}</li>
+                <li>B. {{ q[3] }}</li>
+                <li>C. {{ q[4] }}</li>
+                <li>D. {{ q[5] }}</li>
+            </ul>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="{{ url_for('logout') }}">🚪 Logout</a>
+</body>
+</html>
